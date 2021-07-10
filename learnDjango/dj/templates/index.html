@@ -10,6 +10,14 @@
 
 <body>
     Trust the process, {{name}}!
+    <h1>What's on your mind?</h1>
+    <form action='/about' method='get'>
+        <textarea name='text' style='margin: 0px; width: 1507px; height: 131px;'></textarea> <br>
+        <input type="checkbox" name="removepunc"> Remove Punctuations<br>
+        <input type="checkbox" name="capitalize"> UPPERCASE<br>
+        <input type="checkbox" name="newlinerem"> Remove New Line<br>
+        <button type="submit"> Let's go!</button>
+    </form>
 </body>
 
 </html>
