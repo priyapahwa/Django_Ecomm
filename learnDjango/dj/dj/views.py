@@ -8,18 +8,18 @@ def index(request):
     params = {'name': 'Priya', 'country': 'India'}
 
     return render(request, 'index.html', params)
-    # return HttpResponse('''<h1>Welcome</h1> <a href="https://www.youtube.com/"> Youtube </a>
-    # <a href="https://www.google.com/"> Google </a>''')
 
 
-def about(request):
+def analyze(request):
     # GET.get returns text in input area or form otherwise takes default
-    djtext = (request.GET.get('text', 'default'))
+    djtext = (request.POST.get('text', 'default'))
 
     # check checkbox values
-    removepunc = (request.GET.get('removepunc', 'off'))
-    capitalize = (request.GET.get('capitalize', 'off'))
-    newlinerem = (request.GET.get('newlinerem', 'off'))
+    removepunc = (request.POST.get('removepunc', 'off'))
+    capitalize = (request.POST.get('capitalize', 'off'))
+    newlinerem = (request.POST.get('newlinerem', 'off'))
+    exspacerem = (request.POST.get('exspacerem', 'off'))
+    charcount = (request.POST.get('charcount', 'off'))
 
     # to check which checkbox is on
     if removepunc == "on":
@@ -29,14 +29,47 @@ def about(request):
             if char not in punctuations:
                 analyzed = analyzed + char
         params = {'purpose': 'Removed Punctuations', 'analyzed_text': analyzed}
-        return render(request, 'about.html', params)
+        djtext = analyzed
+        # return render(request, 'analyze.html', params)
 
-    elif capitalize == "on":
+    if capitalize == "on":
         analyzed = ""
         for char in djtext:
             analyzed = analyzed + char.upper()
         params = {'purpose': 'UPPERCASE', 'analyzed_text': analyzed}
-        return render(request, 'about.html', params)
+        djtext = analyzed
+        # return render(request, 'analyze.html', params)
 
-    else:
+    if newlinerem == "on":
+        analyzed = ""
+        for char in djtext:
+            if char != "\n" and char != "\r":  # CARRIAGE RETURN \r
+                analyzed = analyzed + char
+        params = {'purpose': 'Removed New Lines', 'analyzed_text': analyzed}
+        djtext = analyzed
+        # return render(request, 'analyze.html', params)
+
+    if exspacerem == "on":
+        analyzed = ""
+        for index, char in enumerate(djtext):
+            if djtext[index] == " " and djtext[index+1] == " ":
+                pass
+            else:
+                analyzed = analyzed + char
+        params = {'purpose': 'Removed New Lines', 'analyzed_text': analyzed}
+        djtext = analyzed
+        # return render(request, 'analyze.html', params)
+
+    if charcount == "on":
+        analyzed = len(djtext)
+        params = {'purpose': 'Count Characters', 'analyzed_text': analyzed}
+        # return render(request, 'analyze.html', params)
+
+    if(removepunc != "on" and capitalize != "on" and newlinerem != "on" and exspacerem != "on" and charcount != "on"):
         return HttpResponse("Error")
+
+    return render(request, 'analyze.html', params)
+
+
+def aboutus(request):
+    return render(request, 'aboutus.html')
