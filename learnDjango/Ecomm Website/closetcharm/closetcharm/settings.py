@@ -58,7 +58,7 @@ ROOT_URLCONF = 'closetcharm.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['closetcharm/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
